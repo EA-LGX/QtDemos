@@ -3,30 +3,37 @@
 #include <QApplication>
 #include <QSplitter>
 #include <QTextEdit>
+#include <QProgressBar>
 
 int main(int argc, char* argv[]) {
   QApplication a(argc, argv);
-  int b  = 14 ;
-
-  QSplitter *spm = new QSplitter(Qt::Horizontal, 0);
-  QString str = "我在左边";
-  // 将b转换为字符串
-  str = str + QString::number(b);
-  QTextEdit *te1 = new QTextEdit(str, spm);
+  QSplitter* spm = new QSplitter(Qt::Horizontal, 0);
+  QTextEdit* te1 = new QTextEdit("Left Widget");
   te1->setAlignment(Qt::AlignCenter);
+  spm->addWidget(te1);
+  QTextEdit* te4 = new QTextEdit("Center");
+  te4->setAlignment(Qt::AlignCenter);
+  spm->addWidget(te4);
 
-  QSplitter *spr = new QSplitter(Qt::Vertical, spm);
-  spr->setOpaqueResize(false);
-  QTextEdit *te2 = new QTextEdit(QObject::tr("我在右上边"), spr);
-  te2->setAlignment(Qt::AlignCenter);
-  QTextEdit *te3 = new QTextEdit(QObject::tr("我在右下边"), spr);
+  QSplitter* spm2 = new QSplitter(Qt::Vertical, spm);
+
+  QProgressBar* m_progressBar = new QProgressBar();
+  m_progressBar->setRange(0, 100);
+  m_progressBar->setValue(70);
+
+  spm2->addWidget(m_progressBar);
+  QTextEdit* te3 = new QTextEdit("Center Widget");
   te3->setAlignment(Qt::AlignCenter);
+  spm2->addWidget(te3);
+  QTextEdit* te5 = new QTextEdit("Bottom Widget");
+  te5->setAlignment(Qt::AlignCenter);
+  spm2->addWidget(te5);
 
-  spm->setStretchFactor(1, 1);
-  spm->setWindowTitle(QObject::tr("分割窗口"));
+  spm->setStretchFactor(0, 1);  // 索引, 比例
+  spm->setStretchFactor(1, 2);
+  spm->setStretchFactor(2, 1);
+  spm->setWindowTitle("Splitter");
+  spm->setFixedSize(1200, 800);
   spm->show();
-
-  // MainWindow w;
-  // w.show();
   return a.exec();
 }
