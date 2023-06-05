@@ -7,12 +7,12 @@ CONFIG += c++11
 INCLUDEPATH += include
 
 SOURCES += \
-    main.cpp 
-#    mainwindow.cpp
-#
-#HEADERS += \
-#    mainwindow.h
-#
+    main.cpp \
+    src\mainwindow.cpp
+
+HEADERS += \
+    include\mainwindow.h
+
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

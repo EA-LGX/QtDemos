@@ -57,12 +57,14 @@ int main(int argc, char* argv[]) {
     splitter->setStretchFactor(1, 2);
     splitter->show();
 
-    // QString jsonData = "{\"name\":\"John\",\"age\":18}";
-    // QJsonDocument jsonDoc = QJsonDocument::fromJson(jsonData.toUtf8());
-    // QJsonObject jsonObj = jsonDoc.object();
-    // QString name = jsonObj.value("name").toString();
-    // int age = jsonObj.value("age").toInt();
-    // QMessageBox::information(nullptr, "提示", QString("姓名：%1，年龄：%2").arg(name).arg(age));
+    QString jsonData = "{\"name\":\"John\",\"age\":18}";
+    QJsonDocument jsonDoc = QJsonDocument::fromJson(jsonData.toUtf8());
+    QJsonObject jsonObj = jsonDoc.object();
+    QString name = jsonObj.value("name").toString();
+    int age = jsonObj.value("age").toInt();
+
+    // 弹出对话框
+    QMessageBox::information(nullptr, "提示", QString("姓名：%1，年龄：%2").arg(name).arg(age));
 
     //MainWindow w;
     //w.show();
@@ -73,11 +75,12 @@ void getData() {
     // 通过Get请求获取数据
     QNetworkAccessManager* manager = new QNetworkAccessManager();
     QNetworkRequest request;
-    request.setUrl(QUrl("http://localhost:8084/user/findAll"));
+    request.setUrl(QUrl("https://tenapi.cn/v2/color"));
 
-    // QByteArray postData;
-    // postData.append("key1=value1");
-    // postData.append("&key2=value2");
+    QByteArray postData;
+    postData.append("key1=value1");
+    postData.append("&key2=value2");
+
     // QNetworkReply* reply = manager->post(request,postData);
     QNetworkReply* reply = manager->get(request);
 
@@ -86,8 +89,8 @@ void getData() {
             QString responseData = reply->readAll();
             QJsonDocument jsonDoc = QJsonDocument::fromJson(responseData.toUtf8());
             QJsonObject jsonObj = jsonDoc.object();
-            QString name = jsonObj.value("userName").toString();
-            QMessageBox::information(nullptr, "提示", jsonDoc.isArray() ? "是数组" : "不是数组");
+            QString name = jsonObj.value("msg").toString();
+            QMessageBox::information(nullptr, "提示", name);
         }
         else {
             QMessageBox::information(nullptr, "提示", "请求失败");
